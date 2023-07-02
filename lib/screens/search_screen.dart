@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:ecommerce_app/models/product_%20model.dart';
+import 'package:ecommerce_app/widgets/filter_widget.dart';
 import 'package:ecommerce_app/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 
@@ -12,15 +13,17 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   var searchController = TextEditingController();
+  RangeValues currentRangeValues = const RangeValues(0, 2000);
   var search = "";
   List<Product> searchProducts = [];
   var loading = false;
   Future fetch() async {
+    print(currentRangeValues.start.toInt());
     setState(() {
       loading = true;
     });
     var response = await Dio().get(
-        "https://api.escuelajs.co/api/v1/products?title=${searchController.text}&limit=100");
+        "https://api.escuelajs.co/api/v1/products?title=${searchController.text}&limit=100&price_min=${currentRangeValues.start.toInt().toString()}&price_max=${currentRangeValues.end.toInt().toString()}");
     List<Product> responseProducts = [];
     if (response.statusCode == 200) {
       for (var item in response.data) {
@@ -37,6 +40,11 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 
+  void filterSubmit(RangeValues values) async {
+    currentRangeValues = values;
+    fetch();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -45,11 +53,13 @@ class _SearchScreenState extends State<SearchScreen> {
         surfaceTintColor: Colors.transparent,
         title: TextField(
           onSubmitted: (value) {
-            setState(() {
-              search = searchController.text;
-            });
-            if (searchController.text.isNotEmpty) {
-              fetch();
+            if (search != searchController.text) {
+              setState(() {
+                search = searchController.text;
+              });
+              if (searchController.text.isNotEmpty) {
+                fetch();
+              }
             }
           },
           controller: searchController,
@@ -86,52 +96,59 @@ class _SearchScreenState extends State<SearchScreen> {
                 color: Colors.pink,
               ),
             )
-          : search.isNotEmpty && searchProducts.isEmpty
-              ? const Center(
-                  child: Text("Result not found"),
-                )
-              : Column(children: [
-                  search.isEmpty
-                      ? Container()
+          : Column(children: [
+              Container(
+                color: Colors.white,
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    search.isNotEmpty
+                        ? Text(
+                            "Result : ${searchProducts.length}",
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          )
+                        : Container(),
+                    IconButton(
+                        onPressed: () {
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                return SearchFilterBody(
+                                  currentRangeValues: currentRangeValues,
+                                  filterSubmit: filterSubmit,
+                                );
+                              });
+                        },
+                        icon: const Icon(Icons.settings_input_component))
+                  ],
+                ),
+              ),
+              Expanded(
+                  child: search.isNotEmpty && searchProducts.isEmpty
+                      ? const Center(
+                          child: Text("Result not found"),
+                        )
                       : Container(
-                          color: Colors.white,
-                          padding: const EdgeInsets.only(left: 10, right: 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Result : ${searchProducts.length}",
-                                style: const TextStyle(
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                      Icons.settings_input_component))
-                            ],
-                          ),
-                        ),
-                  Expanded(
-                      child: Container(
-                    padding: const EdgeInsets.all(10),
-                    child: GridView.builder(
-                        itemCount: searchProducts.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                childAspectRatio: 1,
-                                crossAxisSpacing: 20,
-                                mainAxisSpacing: 20),
-                        itemBuilder: (context, index) {
-                          final product = searchProducts?[index];
-                          if (product != null) {
-                            return ProductCard(product: product);
-                          } else {
-                            return Container();
-                          }
-                        }),
-                  ))
-                ]),
+                          padding: const EdgeInsets.all(10),
+                          child: GridView.builder(
+                              itemCount: searchProducts.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      childAspectRatio: 1,
+                                      crossAxisSpacing: 20,
+                                      mainAxisSpacing: 20),
+                              itemBuilder: (context, index) {
+                                final product = searchProducts?[index];
+                                if (product != null) {
+                                  return ProductCard(product: product);
+                                } else {
+                                  return Container();
+                                }
+                              }),
+                        ))
+            ]),
     ));
   }
 }

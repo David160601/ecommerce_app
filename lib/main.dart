@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
           iconTheme: const IconThemeData(color: Colors.pink),
           appBarTheme: const AppBarTheme(
               actionsIconTheme: IconThemeData(color: Colors.pink),
+              backgroundColor: Colors.white,
               centerTitle: true,
               iconTheme: IconThemeData(color: Colors.pink),
               titleTextStyle: TextStyle(
