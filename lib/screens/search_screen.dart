@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:ecommerce_app/models/category_model.dart';
 import 'package:ecommerce_app/models/product_%20model.dart';
 import 'package:ecommerce_app/widgets/filter_widget.dart';
 import 'package:ecommerce_app/widgets/product_card.dart';
@@ -12,13 +13,14 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  var searchController = TextEditingController();
   RangeValues currentRangeValues = const RangeValues(0, 2000);
+  var searchController = TextEditingController();
   var search = "";
-  List<Product> searchProducts = [];
   var loading = false;
+  var categoriesLoading = false;
+  List<Product> searchProducts = [];
+  List<Category> categories = [];
   Future fetch() async {
-    print(currentRangeValues.start.toInt());
     setState(() {
       loading = true;
     });
@@ -42,7 +44,33 @@ class _SearchScreenState extends State<SearchScreen> {
 
   void filterSubmit(RangeValues values) async {
     currentRangeValues = values;
-    fetch();
+    if (search.isNotEmpty) {
+      fetch();
+    }
+  }
+
+  Future getCategories() async {
+    setState(() {
+      categoriesLoading = true;
+    });
+    var response =
+        await Dio().get("https://api.escuelajs.co/api/v1/categories/");
+    List<Category> responseCategories = [];
+    if (response.statusCode == 200) {
+      for (var item in response.data) {
+        responseCategories.add(Category.fromJson(item));
+      }
+    }
+    categories = responseCategories;
+    setState(() {
+      categoriesLoading = false;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCategories();
   }
 
   @override
