@@ -20,6 +20,7 @@ class MainDrawer extends StatelessWidget {
               children: [
                 InkWell(
                   onTap: () {
+                    Navigator.pop(context);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
