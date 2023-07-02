@@ -17,6 +17,7 @@ class _SearchFilterBodyState extends State<SearchFilterBody> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
+      height: 200,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const SizedBox(
           height: 10,
@@ -32,9 +33,8 @@ class _SearchFilterBodyState extends State<SearchFilterBody> {
           ],
         ),
         const Padding(
-          padding: const EdgeInsets.only(left: 20),
-          child:
-              const Text(textAlign: TextAlign.start, "Price range 0 - 2000 \$"),
+          padding: EdgeInsets.only(left: 20),
+          child: Text(textAlign: TextAlign.start, "Price range 0 - 2000 \$"),
         ),
         RangeSlider(
           activeColor: Colors.pink,

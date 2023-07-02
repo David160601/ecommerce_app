@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/screens/categories_screen.dart';
 import 'package:ecommerce_app/screens/home_screen.dart';
 import 'package:ecommerce_app/widgets/main_app_bar.dart';
+import 'package:ecommerce_app/widgets/main_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
@@ -32,7 +33,7 @@ class _TabsScreenState extends State<TabsScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      drawer: const Drawer(),
+      drawer: const MainDrawer(),
       body: screenBody,
       appBar: MainAppBar(
         title: screenTitle,
