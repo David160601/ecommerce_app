@@ -31,7 +31,7 @@ class _ProductsScreenState extends State<CategoryScreen> {
         responseProducts.add(Product.fromJson(item));
       }
       setState(() {
-        if (responseProducts.length == 0) {
+        if (responseProducts.isEmpty) {
           end = true;
         } else {
           offset += responseProducts.length;
