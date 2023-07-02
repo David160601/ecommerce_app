@@ -99,7 +99,11 @@ class _SearchScreenState extends State<SearchScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(),
+                              Text(
+                                "Result : ${searchProducts.length}",
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold),
+                              ),
                               IconButton(
                                   onPressed: () {},
                                   icon: const Icon(
