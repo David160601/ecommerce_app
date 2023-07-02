@@ -5,7 +5,6 @@ import 'package:ecommerce_app/widgets/main_app_bar.dart';
 import 'package:ecommerce_app/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletons/skeletons.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class CategoryScreen extends StatefulWidget {
   final Category category;
@@ -18,34 +17,60 @@ class CategoryScreen extends StatefulWidget {
 class _ProductsScreenState extends State<CategoryScreen> {
   RangeValues currentRangeValues = const RangeValues(0, 2000);
   List<Product> products = [];
-  var loading = true;
-  final PagingController<int, Product> _pagingController =
-      PagingController(firstPageKey: 0);
-  Future<List<Product>> getProducts(int categoryId) async {
+  var loading = false;
+  var offset = 0;
+  final controller = ScrollController();
+  var scrollLoading = false;
+  var end = false;
+  Future fetch() async {
+    print(currentRangeValues.start);
+    print(currentRangeValues.end);
+    var response = await Dio().get(
+        "https://api.escuelajs.co/api/v1/products?price_min=${currentRangeValues.start.toInt().toString()}&price_max=${currentRangeValues.end.toInt().toString()}&categoryId=${widget.category.id ?? 1}&limit=10&offset=${offset}");
+    List<Product> responseProducts = [];
+    if (response.statusCode == 200) {
+      for (var item in response.data) {
+        responseProducts.add(Product.fromJson(item));
+      }
+      setState(() {
+        if (responseProducts.length == 0) {
+          end = true;
+        } else {
+          offset += responseProducts.length;
+          products.addAll(responseProducts);
+        }
+      });
+    } else {
+      throw Exception("Error");
+    }
+  }
+
+  Future firstFetch() async {
     setState(() {
       loading = true;
     });
-    var response = await Dio().get(
-        "https://api.escuelajs.co/api/v1/products?price_min=${currentRangeValues.start}&price_max=${currentRangeValues.end}&categoryId=${categoryId}&limit=10&offset=0");
-    List<Product> products = [];
-
-    if (response.statusCode == 200) {
-      for (var item in response.data) {
-        products.add(Product.fromJson(item));
-      }
-    }
-
+    await fetch();
     setState(() {
       loading = false;
     });
-    return products;
   }
 
   @override
   void initState() {
     super.initState();
-    getProducts(widget.category.id ?? 1).then((value) {
-      products = value;
+    firstFetch();
+    controller.addListener(() async {
+      if (controller.position.maxScrollExtent == controller.offset) {
+        if (!end && !scrollLoading && !loading) {
+          setState(() {
+            scrollLoading = true;
+          });
+          await fetch();
+          setState(() {
+            scrollLoading = false;
+          });
+        }
+      }
     });
   }
 
@@ -72,9 +97,14 @@ class _ProductsScreenState extends State<CategoryScreen> {
               onChanged: (RangeValues values) {
                 setState(() {
                   currentRangeValues = values;
-                  getProducts(widget.category.id ?? 1).then((value) {
-                    products = value;
-                  });
+                });
+              },
+              onChangeEnd: (RangeValues values) {
+                setState(() {
+                  end = false;
+                  offset = 0;
+                  products = [];
+                  firstFetch();
                 });
               },
             ),
@@ -103,22 +133,35 @@ class _ProductsScreenState extends State<CategoryScreen> {
                             borderRadius: BorderRadius.circular(20)),
                       );
                     })
-                : GridView.builder(
-                    itemCount: products.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 1,
-                            crossAxisSpacing: 20,
-                            mainAxisSpacing: 20),
-                    itemBuilder: (context, index) {
-                      final product = products?[index];
-                      if (product != null) {
-                        return ProductCard(product: product);
-                      } else {
-                        return Container();
-                      }
-                    }),
+                : products.length == 0
+                    ? const Center(
+                        child: Text("No data available"),
+                      )
+                    : GridView.builder(
+                        controller: controller,
+                        itemCount: scrollLoading
+                            ? products.length + 2
+                            : products.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 1,
+                                crossAxisSpacing: 20,
+                                mainAxisSpacing: 20),
+                        itemBuilder: (context, index) {
+                          if (index < products.length) {
+                            final product = products?[index];
+                            if (product != null) {
+                              return ProductCard(product: product);
+                            } else {
+                              return Container();
+                            }
+                          } else {
+                            return const SkeletonLine(
+                              style: SkeletonLineStyle(height: double.infinity),
+                            );
+                          }
+                        }),
           ),
         )
       ]),

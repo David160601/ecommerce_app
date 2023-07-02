@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:dio/dio.dart';
 import 'package:ecommerce_app/models/category_model.dart';
 import 'package:ecommerce_app/widgets/category_card.dart';

@@ -40,7 +40,6 @@ dependencies:
   transparent_image: ^2.0.1
   dio: ^5.2.1+1
   skeletons: ^0.0.3
-  infinite_scroll_pagination: ^3.2.0
 
 dev_dependencies:
   flutter_test:
