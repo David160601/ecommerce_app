@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:ecommerce_app/models/product_%20model.dart';
+import 'package:ecommerce_app/screens/search_screen.dart';
 import 'package:ecommerce_app/widgets/product_card.dart';
 import 'package:ecommerce_app/widgets/slide_item.dart';
 import 'package:flutter/material.dart';
@@ -48,6 +49,14 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               TextField(
+                readOnly: true,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SearchScreen()),
+                  );
+                },
                 decoration: InputDecoration(
                   contentPadding: const EdgeInsets.only(left: 10, right: 10),
                   suffixIcon: const Icon(

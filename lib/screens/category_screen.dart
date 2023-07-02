@@ -23,8 +23,6 @@ class _ProductsScreenState extends State<CategoryScreen> {
   var scrollLoading = false;
   var end = false;
   Future fetch() async {
-    print(currentRangeValues.start);
-    print(currentRangeValues.end);
     var response = await Dio().get(
         "https://api.escuelajs.co/api/v1/products?price_min=${currentRangeValues.start.toInt().toString()}&price_max=${currentRangeValues.end.toInt().toString()}&categoryId=${widget.category.id ?? 1}&limit=10&offset=${offset}");
     List<Product> responseProducts = [];
@@ -133,7 +131,7 @@ class _ProductsScreenState extends State<CategoryScreen> {
                             borderRadius: BorderRadius.circular(20)),
                       );
                     })
-                : products.length == 0
+                : products.isEmpty
                     ? const Center(
                         child: Text("No data available"),
                       )
