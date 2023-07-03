@@ -13,6 +13,12 @@ class ProductCard extends ConsumerStatefulWidget {
 }
 
 class _ProductCardState extends ConsumerState<ProductCard> {
+  late SnackBar currentSnackBar;
+  void _showSnackBar(BuildContext context, snackBar) {
+    ScaffoldMessenger.of(context).hideCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -50,13 +56,16 @@ class _ProductCardState extends ConsumerState<ProductCard> {
                   ),
                   IconButton(
                       onPressed: () {
-                        ref
+                        bool added = ref
                             .read(cartProvider.notifier)
                             .addProductToCart(widget.product);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Product added to cart')),
-                        );
+                        _showSnackBar(
+                            context,
+                            SnackBar(
+                              content: Text(added
+                                  ? 'Product added to cart'
+                                  : "Product already added"),
+                            ));
                       },
                       icon: const Icon(Icons.add))
                 ],
