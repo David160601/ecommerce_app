@@ -21,6 +21,13 @@ class MainDrawer extends ConsumerWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                token == null || token.isEmpty
+                    ? Container()
+                    : const CircleAvatar(
+                        radius: 80 / 3,
+                        backgroundImage: NetworkImage(
+                            "https://upload.wikimedia.org/wikipedia/commons/3/34/Elon_Musk_Royal_Society_%28crop2%29.jpg"),
+                      ),
                 InkWell(
                   onTap: () {
                     Navigator.pop(context);

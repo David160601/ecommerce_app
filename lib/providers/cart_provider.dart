@@ -35,6 +35,7 @@ class CartNotifier extends StateNotifier<List<Product>> {
 
   void removeProductFromCart(Product product) {
     state = state.where((item) => product.id != item.id).toList();
+    storage.write(key: "cartProducts", value: jsonEncode(state));
   }
 }
 
