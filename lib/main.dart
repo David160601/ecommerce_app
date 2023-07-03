@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           useMaterial3: true,
           iconTheme: const IconThemeData(color: Colors.pink),
+          buttonTheme: ButtonThemeData(),
           appBarTheme: const AppBarTheme(
               actionsIconTheme: IconThemeData(color: Colors.pink),
               backgroundColor: Colors.white,
