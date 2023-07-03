@@ -40,6 +40,9 @@ dependencies:
   transparent_image: ^2.0.1
   dio: ^5.2.1+1
   skeletons: ^0.0.3
+  flutter_secure_storage: ^8.0.0
+  flutter_hooks: ^0.18.0
+  hooks_riverpod: ^2.3.6
 
 dev_dependencies:
   flutter_test:

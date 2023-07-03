@@ -1,11 +1,15 @@
+import 'package:ecommerce_app/providers/auth_provider.dart';
 import 'package:ecommerce_app/screens/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class MainDrawer extends StatelessWidget {
+class MainDrawer extends ConsumerWidget {
   const MainDrawer({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    String? token = ref.watch(authProvider);
+    print(token);
     return Drawer(
       child: ListView(
         // Important: Remove any padding from the ListView.
@@ -23,15 +27,33 @@ class MainDrawer extends StatelessWidget {
                     Navigator.pop(context);
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const LoginScreen()),
+                      MaterialPageRoute(builder: (context) => LoginScreen()),
                     );
                   },
-                  child: const Text(
-                    'Login/Sign up',
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
+                  child: token == null || token.isEmpty
+                      ? const Text(
+                          'Login/Sign up',
+                          style: TextStyle(
+                              color: Colors.white, fontWeight: FontWeight.bold),
+                        )
+                      : TextButton(
+                          style: TextButton.styleFrom(
+                            foregroundColor: Colors.pink,
+                          ),
+                          onPressed: () {
+                            ref.read(authProvider.notifier).removeToken();
+                            Navigator.pop(context);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => LoginScreen()),
+                            );
+                          },
+                          child: const Text(
+                            "log out",
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 160, 79, 79)),
+                          )),
                 ),
               ],
             ),

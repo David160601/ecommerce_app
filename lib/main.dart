@@ -1,16 +1,32 @@
+import 'package:ecommerce_app/screens/login_screen.dart';
 import 'package:ecommerce_app/screens/tab_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final storage = FlutterSecureStorage();
+  String? accessToken = await storage.read(key: "access_token");
+
+  runApp(
+    ProviderScope(
+      child: MyApp(
+        accessToken: accessToken,
+      ),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+  final String? accessToken;
+  const MyApp({super.key, required this.accessToken});
+  
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    print(accessToken);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
