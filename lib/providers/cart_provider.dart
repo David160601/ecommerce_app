@@ -6,14 +6,16 @@ class CartNotifier extends StateNotifier<List<Product>> {
   CartNotifier() : super([]);
   final storage = new FlutterSecureStorage();
   void addProductToCart(Product product) {
-    if (!state.contains(product)) {}
-    state = [...state, product];
+    if (!state.contains(product)) {
+      state = [...state, product];
+    }
   }
+
   void removeProductFromCart(Product product) {
     state = state.where((item) => product.id != item.id).toList();
   }
 }
 
-final authProvider = StateNotifierProvider<CartNotifier, List<Product>>((ref) {
+final cartProvider = StateNotifierProvider<CartNotifier, List<Product>>((ref) {
   return CartNotifier();
 });

@@ -1,22 +1,24 @@
 import 'package:ecommerce_app/models/product_%20model.dart';
+import 'package:ecommerce_app/providers/cart_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class ProductCard extends StatefulWidget {
+class ProductCard extends ConsumerStatefulWidget {
   final Product product;
   const ProductCard({super.key, required this.product});
 
   @override
-  State<ProductCard> createState() => _ProductCardState();
+  ConsumerState<ProductCard> createState() => _ProductCardState();
 }
 
-class _ProductCardState extends State<ProductCard> {
+class _ProductCardState extends ConsumerState<ProductCard> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return InkWell(
       borderRadius: BorderRadius.circular(10),
-      splashColor: Color.fromARGB(255, 241, 225, 230),
+      splashColor: const Color.fromARGB(255, 241, 225, 230),
       onTap: () {},
       child: Ink(
         padding: const EdgeInsets.only(left: 5, right: 5),
@@ -42,17 +44,27 @@ class _ProductCardState extends State<ProductCard> {
                   Expanded(
                     child: Text(
                       "\$ ${widget.product.price ?? ""}",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 18),
                     ),
                   ),
-                  IconButton(onPressed: () {}, icon: const Icon(Icons.add))
+                  IconButton(
+                      onPressed: () {
+                        ref
+                            .read(cartProvider.notifier)
+                            .addProductToCart(widget.product);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                              content: Text('Product added to cart')),
+                        );
+                      },
+                      icon: const Icon(Icons.add))
                 ],
               ),
             ),
             Flexible(
               flex: 3,
-              child: Container(
+              child: SizedBox(
                 width: double.maxFinite,
                 child: FadeInImage(
                     fit: BoxFit.cover,

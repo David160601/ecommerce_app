@@ -9,7 +9,6 @@ class MainDrawer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     String? token = ref.watch(authProvider);
-    print(token);
     return Drawer(
       child: ListView(
         // Important: Remove any padding from the ListView.
@@ -52,7 +51,7 @@ class MainDrawer extends ConsumerWidget {
                           child: const Text(
                             "log out",
                             style: TextStyle(
-                                color: Color.fromARGB(255, 160, 79, 79)),
+                                color: Color.fromARGB(255, 255, 255, 255)),
                           )),
                 ),
               ],
