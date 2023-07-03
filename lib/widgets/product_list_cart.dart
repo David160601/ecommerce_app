@@ -12,7 +12,7 @@ class ProductListCartCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      height: 120, // Set the desired height here
+      height: 100, // Set the desired height here
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -31,13 +31,15 @@ class ProductListCartCard extends ConsumerWidget {
       child: Row(
         children: [
           Expanded(
-            child: Container(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Flexible(
-                    flex: 2,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Flexible(
+                    flex: 1,
                     child: FadeInImage(
+                      width: 100,
                       fit: BoxFit.cover, // Fill the entire space
                       placeholder: MemoryImage(kTransparentImage),
                       image: NetworkImage(
@@ -47,37 +49,40 @@ class ProductListCartCard extends ConsumerWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                    width: 10,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Flexible(
+                  flex: 4,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        product.title ?? "",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Text(
+                        product.description ?? "",
+                        maxLines: 3,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 9,
+                        ),
+                      ),
+                    ],
                   ),
-                  Flexible(
-                    flex: 4,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          product.title ?? "",
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          product.description ?? "",
-                          maxLines: 3,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 9,
-                          ),
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                )
+              ],
             ),
           ),
           IconButton(

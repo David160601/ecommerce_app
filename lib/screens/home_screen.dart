@@ -103,7 +103,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 const EdgeInsets.only(left: 20, right: 20)),
                       );
                     } else if (snapshot.hasError) {
-                      children = Container();
+                      children = SkeletonLine(
+                        style: SkeletonLineStyle(
+                            height: height * 0.20,
+                            padding:
+                                const EdgeInsets.only(left: 20, right: 20)),
+                      );
                     } else {
                       if (snapshot.data?.isEmpty == true) {
                         children = Container();
@@ -167,7 +172,38 @@ class _HomeScreenState extends State<HomeScreen> {
                         ],
                       );
                     } else if (snapshot.hasError) {
-                      children = Container();
+                      children = Column(
+                        children: [
+                          const SizedBox(
+                            height: 3,
+                          ),
+                          const SkeletonLine(
+                            style: SkeletonLineStyle(
+                              padding: EdgeInsets.all(15),
+                            ),
+                          ),
+                          GridView.builder(
+                              shrinkWrap: true,
+                              itemCount: 6,
+                              physics: const NeverScrollableScrollPhysics(),
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      childAspectRatio: 1,
+                                      crossAxisSpacing: 20,
+                                      mainAxisSpacing: 20),
+                              itemBuilder: (context, index) {
+                                return SkeletonLine(
+                                  style: SkeletonLineStyle(
+                                      borderRadius: BorderRadius.circular(20),
+                                      height: double.infinity),
+                                );
+                              }),
+                          const SizedBox(
+                            height: 10,
+                          )
+                        ],
+                      );
                     } else {
                       if (snapshot.data?.isEmpty == true) {
                         children = Container();

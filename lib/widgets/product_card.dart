@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/models/product_%20model.dart';
 import 'package:ecommerce_app/providers/cart_provider.dart';
+import 'package:ecommerce_app/screens/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -25,7 +26,13 @@ class _ProductCardState extends ConsumerState<ProductCard> {
     return InkWell(
       borderRadius: BorderRadius.circular(10),
       splashColor: const Color.fromARGB(255, 241, 225, 230),
-      onTap: () {},
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (builder) {
+          return ProductDetail(
+            product: widget.product,
+          );
+        }));
+      },
       child: Ink(
         padding: const EdgeInsets.only(left: 5, right: 5),
         decoration: BoxDecoration(boxShadow: [

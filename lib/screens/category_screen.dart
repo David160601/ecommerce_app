@@ -102,6 +102,7 @@ class _ProductsScreenState extends State<CategoryScreen> {
                   end = false;
                   offset = 0;
                   products = [];
+
                   firstFetch();
                 });
               },
@@ -117,7 +118,7 @@ class _ProductsScreenState extends State<CategoryScreen> {
             padding: const EdgeInsets.all(10),
             child: loading
                 ? GridView.builder(
-                    itemCount: 20,
+                    itemCount: 6,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
