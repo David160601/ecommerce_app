@@ -4,7 +4,7 @@ import 'package:transparent_image/transparent_image.dart';
 
 class ProductDetail extends StatefulWidget {
   final Product product;
-  ProductDetail({super.key, required this.product});
+  const ProductDetail({super.key, required this.product});
 
   @override
   State<ProductDetail> createState() => _ProductDetailState();

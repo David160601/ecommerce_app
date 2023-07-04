@@ -6,7 +6,6 @@ import 'package:transparent_image/transparent_image.dart';
 class SlideItem extends StatelessWidget {
   final Product product;
   const SlideItem({super.key, required this.product});
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
