@@ -25,7 +25,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
             children: [
               ListView.builder(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: ref.watch(cartProvider).length,
                 itemBuilder: (context, index) {
                   return Column(

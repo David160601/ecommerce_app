@@ -36,25 +36,21 @@ class ProductListCartCard extends ConsumerWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
-                  child: Flexible(
-                    flex: 1,
-                    child: FadeInImage(
-                      width: 100,
-                      fit: BoxFit.cover, // Fill the entire space
-                      placeholder: MemoryImage(kTransparentImage),
-                      image: NetworkImage(
-                        product.images?.isNotEmpty == true
-                            ? product.images![0]
-                            : '',
-                      ),
+                  child: FadeInImage(
+                    width: 100,
+                    fit: BoxFit.cover, // Fill the entire space
+                    placeholder: MemoryImage(kTransparentImage),
+                    image: NetworkImage(
+                      product.images?.isNotEmpty == true
+                          ? product.images![0]
+                          : '',
                     ),
                   ),
                 ),
                 const SizedBox(
                   width: 10,
                 ),
-                Flexible(
-                  flex: 4,
+                Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -64,9 +60,9 @@ class ProductListCartCard extends ConsumerWidget {
                       Text(
                         product.title ?? "",
                         style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14,
+                            overflow: TextOverflow.ellipsis),
                       ),
                       const SizedBox(
                         height: 10,
