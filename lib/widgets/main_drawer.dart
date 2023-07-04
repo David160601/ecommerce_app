@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class MainDrawer extends ConsumerWidget {
   const MainDrawer({super.key});
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     String? token = ref.watch(authProvider);
