@@ -20,6 +20,7 @@ class CategoryCard extends StatelessWidget {
       },
       child: Ink(
         decoration: BoxDecoration(
+            border: Border.all(width: 1),
             image: DecorationImage(
                 image: NetworkImage(category.image ?? ''),
                 fit: BoxFit.cover,
@@ -27,17 +28,6 @@ class CategoryCard extends StatelessWidget {
                   Colors.pink.withOpacity(0.2),
                   BlendMode.srcOver,
                 )),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                blurRadius: 10.0, // soften the shadow
-                spreadRadius: 0.0, //extend the shadow
-                offset: const Offset(
-                  2.0, // Move to right 10  horizontally
-                  2.0, // Move to bottom 10 Vertically
-                ),
-              )
-            ],
             borderRadius: BorderRadius.circular(16)),
         child: Center(
           child: Text(

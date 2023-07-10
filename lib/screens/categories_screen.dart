@@ -29,7 +29,7 @@ class _CategorieScreenState extends State<CategorieScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-       padding: const EdgeInsets.all(CONTAINER_PADDING),
+        padding: const EdgeInsets.all(CONTAINER_PADDING),
         child: FutureBuilder<List<Category>>(
           future: getCategories(),
           builder:

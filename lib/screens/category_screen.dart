@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:ecommerce_app/constant/style.dart';
 import 'package:ecommerce_app/models/category_model.dart';
 import 'package:ecommerce_app/models/product_%20model.dart';
-import 'package:ecommerce_app/widgets/main_app_bar.dart';
 import 'package:ecommerce_app/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletons/skeletons.dart';

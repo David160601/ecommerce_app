@@ -9,7 +9,6 @@ class ProductListCartCard extends ConsumerWidget {
   final Product product;
   const ProductListCartCard({Key? key, required this.product})
       : super(key: key);
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(

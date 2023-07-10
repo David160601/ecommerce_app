@@ -57,6 +57,11 @@ class _ProductDetailState extends ConsumerState<ProductDetail> {
             bool added = ref
                 .read(cartProvider.notifier)
                 .addProductToCart(widget.product);
+            ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(
+                  added ? 'Product added to cart' : "Product already added"),
+            ));
           },
           style: ElevatedButton.styleFrom(foregroundColor: Colors.pink),
           child: const Text(
