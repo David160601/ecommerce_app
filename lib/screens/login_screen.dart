@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:ecommerce_app/providers/auth_provider.dart';
+import 'package:ecommerce_app/screens/sign_up_screen.dart';
 import 'package:ecommerce_app/screens/tab_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -63,12 +64,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       // Handle exception
     }
   }
-@override
+
+  @override
   void dispose() {
-      super.dispose();
+    super.dispose();
     password.dispose();
     email.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -162,6 +165,20 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           : Container(),
                       label: const Text('Login'),
                     )),
+                const SizedBox(
+                  height: 20,
+                ),
+                SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(primary: Colors.blue),
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SignUpScreen()));
+                        },
+                        child: const Text("Sign Up")))
               ],
             ),
           ),
