@@ -45,7 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       children: [
         Container(
-          padding: const EdgeInsets.only(left: 10, right: 10),
+          color: Colors.white,
+          padding: const EdgeInsets.symmetric(horizontal: CONTAINER_PADDING),
           child: Column(
             children: [
               TextField(
@@ -58,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
                 decoration: InputDecoration(
-                  contentPadding: const EdgeInsets.only(left: 10, right: 10),
+                  
                   suffixIcon: const Icon(
                     Icons.search,
                     color: Colors.pink,
@@ -78,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-             const Divider(
+              const Divider(
                 height: 30,
               )
             ],
@@ -87,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Expanded(
           child: SingleChildScrollView(
             child: Container(
-              padding: const EdgeInsets.only(left: 10, right: 10),
+              padding: const EdgeInsets.symmetric(horizontal: CONTAINER_PADDING),
               child: Column(children: [
                 FutureBuilder<List<Product>>(
                   future: getSliderProducts(),
@@ -215,14 +216,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Text(
+                                 Text(
                                   "Popular product",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
+                                  style: Theme.of(context).textTheme.titleMedium,
                                 ),
                                 IconButton(
-                                  splashRadius: ICON_SPLASH_RADIUS,
+                                    splashRadius: ICON_SPLASH_RADIUS,
                                     onPressed: () {},
                                     icon: const Icon(Icons.arrow_right))
                               ],

@@ -12,13 +12,9 @@ class ProductListCartCard extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Material(
-      color: Colors.white,
-      child: Container(
-        height: 100, // Set the desired height here
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-        ),
+    return SizedBox(
+      height: 100, // Set the desired height here
+      child: Card(
         child: Row(
           children: [
             Expanded(
@@ -50,21 +46,16 @@ class ProductListCartCard extends ConsumerWidget {
                         ),
                         Text(
                           product.title ?? "",
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14,
-                              overflow: TextOverflow.ellipsis),
+                          style: Theme.of(context).textTheme.titleMedium?.merge(
+                              const TextStyle(overflow: TextOverflow.ellipsis)),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
                         Text(
                           product.description ?? "",
-                          maxLines: 3,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 9,
-                          ),
+                          maxLines: 2,
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ],
                     ),

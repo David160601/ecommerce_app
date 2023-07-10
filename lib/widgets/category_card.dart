@@ -42,8 +42,10 @@ class CategoryCard extends StatelessWidget {
         child: Center(
           child: Text(
             category.name ?? "",
-            style: const TextStyle(
-                fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+            style: Theme.of(context)
+                .textTheme
+                .titleLarge
+                ?.merge(const TextStyle(color: Colors.white)),
           ),
         ),
       ),

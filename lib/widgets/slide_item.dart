@@ -18,23 +18,23 @@ class SlideItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(5)),
       child: Row(
         children: [
-          Container(
-              padding: const EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
-              child: const Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    "Big discount",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                  ),
-                  Text(
-                    "50 %",
-                    style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
-                  ),
-                ],
-              )),
+          Card(
+              child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                const Text(
+                  "Big discount",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                ),
+                Text(
+                  "50 %",
+                  style: Theme.of(context).textTheme.headlineLarge,
+                ),
+              ],
+            ),
+          )),
           const SizedBox(
             width: 15,
           ),

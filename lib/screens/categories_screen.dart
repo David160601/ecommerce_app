@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:ecommerce_app/constant/style.dart';
 import 'package:ecommerce_app/models/category_model.dart';
 import 'package:ecommerce_app/widgets/category_card.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _CategorieScreenState extends State<CategorieScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.all(10),
+       padding: const EdgeInsets.all(CONTAINER_PADDING),
         child: FutureBuilder<List<Category>>(
           future: getCategories(),
           builder:

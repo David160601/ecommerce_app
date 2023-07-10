@@ -19,7 +19,7 @@ class _CartScreenState extends ConsumerState<CartScreen> {
         title: const Text('Cart'),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
           child: Column(
             children: [

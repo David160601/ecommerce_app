@@ -134,7 +134,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 color: Colors.white,
                 child: Padding(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      const EdgeInsets.symmetric(vertical: CONTAINER_PADDING, horizontal: CONTAINER_PADDING),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -169,7 +169,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           child: Text("Result not found"),
                         )
                       : Container(
-                          padding: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(CONTAINER_PADDING),
                           child: GridView.builder(
                               itemCount: searchProducts.length,
                               gridDelegate:

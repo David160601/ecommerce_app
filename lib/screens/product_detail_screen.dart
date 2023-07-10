@@ -34,13 +34,15 @@ class _ProductDetailState extends State<ProductDetail> {
               children: [
                 Text(
                   "\$ ${widget.product.price.toString()}" ?? '',
-                  style: const TextStyle(
-                      fontSize: 20, fontWeight: FontWeight.bold),
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                Text(widget.product.description ?? ''),
+                Text(
+                  widget.product.description ?? '',
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
               ],
             ))
       ]),
@@ -51,7 +53,10 @@ class _ProductDetailState extends State<ProductDetail> {
         child: ElevatedButton(
           onPressed: () {},
           style: ElevatedButton.styleFrom(foregroundColor: Colors.pink),
-          child: const Text("Add to cart",style: TextStyle(color: Colors.white),),
+          child: const Text(
+            "Add to cart",
+            style: TextStyle(color: Colors.white),
+          ),
         ),
       ),
     );

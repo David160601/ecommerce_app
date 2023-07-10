@@ -19,18 +19,23 @@ class _MainAppBarState extends ConsumerState<MainAppBar> {
   Widget build(BuildContext context) {
     int productSize = ref.watch(cartProvider).length;
     return AppBar(
+      
       title: Text(widget.title),
       surfaceTintColor: Colors.transparent,
       actions: [
-        IconButton(
-            splashRadius: ICON_SPLASH_RADIUS,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const CartScreen()),
-              );
-            },
-            icon: const Icon(Icons.shopping_cart))
+        Padding(
+
+          padding: const EdgeInsets.only(right: CONTAINER_PADDING-10),
+          child: IconButton(
+              splashRadius: ICON_SPLASH_RADIUS,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CartScreen()),
+                );
+              },
+              icon: const Icon(Icons.shopping_cart)),
+        )
       ],
     );
   }

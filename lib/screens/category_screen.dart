@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:ecommerce_app/constant/style.dart';
 import 'package:ecommerce_app/models/category_model.dart';
 import 'package:ecommerce_app/models/product_%20model.dart';
 import 'package:ecommerce_app/widgets/main_app_bar.dart';
@@ -71,11 +72,13 @@ class _ProductsScreenState extends State<CategoryScreen> {
       }
     });
   }
-@override
+
+  @override
   void dispose() {
     super.dispose();
     controller.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -83,10 +86,13 @@ class _ProductsScreenState extends State<CategoryScreen> {
       appBar: MainAppBar(title: widget.category.name ?? ""),
       body: Column(children: [
         Container(
-          padding: const EdgeInsets.only(left: 10, right: 10),
+          padding: const EdgeInsets.all(CONTAINER_PADDING),
           decoration: const BoxDecoration(color: Colors.white),
           child: Column(children: [
-            const Text("Price range 0 - 2000 \$"),
+            Text(
+              "Price range 0 - 2000 \$",
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
             RangeSlider(
               values: currentRangeValues,
               max: 2000,
@@ -110,14 +116,14 @@ class _ProductsScreenState extends State<CategoryScreen> {
                 });
               },
             ),
-        const Divider(
+            const Divider(
               height: 30,
             )
           ]),
         ),
         Expanded(
           child: Container(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.symmetric(horizontal: CONTAINER_PADDING),
             child: loading
                 ? GridView.builder(
                     itemCount: 6,
