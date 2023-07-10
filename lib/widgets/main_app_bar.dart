@@ -1,8 +1,10 @@
+import 'package:ecommerce_app/constant/style.dart';
 import 'package:ecommerce_app/providers/cart_provider.dart';
 import 'package:ecommerce_app/screens/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
 class MainAppBar extends ConsumerStatefulWidget implements PreferredSizeWidget {
   final String title;
   const MainAppBar({super.key, required this.title});
@@ -11,6 +13,7 @@ class MainAppBar extends ConsumerStatefulWidget implements PreferredSizeWidget {
   @override
   ConsumerState<MainAppBar> createState() => _MainAppBarState();
 }
+
 class _MainAppBarState extends ConsumerState<MainAppBar> {
   @override
   Widget build(BuildContext context) {
@@ -20,6 +23,7 @@ class _MainAppBarState extends ConsumerState<MainAppBar> {
       surfaceTintColor: Colors.transparent,
       actions: [
         IconButton(
+            splashRadius: ICON_SPLASH_RADIUS,
             onPressed: () {
               Navigator.push(
                 context,

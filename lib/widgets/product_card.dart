@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/constant/style.dart';
 import 'package:ecommerce_app/models/product_%20model.dart';
 import 'package:ecommerce_app/providers/cart_provider.dart';
 import 'package:ecommerce_app/screens/product_detail_screen.dart';
@@ -62,6 +63,7 @@ class _ProductCardState extends ConsumerState<ProductCard> {
                     ),
                   ),
                   IconButton(
+                    splashRadius: ICON_SPLASH_RADIUS,
                       onPressed: () {
                         bool added = ref
                             .read(cartProvider.notifier)

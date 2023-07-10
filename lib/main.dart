@@ -25,9 +25,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+    
+      
+          iconButtonTheme: IconButtonThemeData(),
           primarySwatch: Colors.pink,
           brightness: Brightness.light,
           iconTheme: const IconThemeData(color: Colors.pink),
+          scaffoldBackgroundColor: Colors.white,
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(
               padding: MaterialStateProperty.all<EdgeInsets>(

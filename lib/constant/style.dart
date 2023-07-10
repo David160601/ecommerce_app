@@ -1,0 +1,1 @@
+const double ICON_SPLASH_RADIUS=18;

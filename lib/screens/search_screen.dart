@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:ecommerce_app/constant/style.dart';
 import 'package:ecommerce_app/models/category_model.dart';
 import 'package:ecommerce_app/models/product_%20model.dart';
 import 'package:ecommerce_app/widgets/filter_widget.dart';
@@ -128,59 +129,65 @@ class _SearchScreenState extends State<SearchScreen> {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : Container(
-              color: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Column(children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    search.isNotEmpty
-                        ? Text(
-                            "Result : ${searchProducts.length}",
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          )
-                        : Container(),
-                    IconButton(
-                        onPressed: () {
-                          showModalBottomSheet(
+          : Column(children: [
+              Material(
+                color: Colors.white,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      search.isNotEmpty
+                          ? Text(
+                              "Result : ${searchProducts.length}",
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            )
+                          : Container(),
+                      IconButton(
+                        splashRadius: ICON_SPLASH_RADIUS,
+                          onPressed: () {
+                            showModalBottomSheet(
                               context: context,
                               builder: (context) {
                                 return SearchFilterBody(
                                   currentRangeValues: currentRangeValues,
                                   filterSubmit: filterSubmit,
                                 );
-                              });
-                        },
-                        icon: const Icon(Icons.settings_input_component))
-                  ],
+                              },
+                            );
+                          },
+                          icon: const Icon(Icons.settings_input_component))
+                    ],
+                  ),
                 ),
-                Expanded(
-                    child: search.isNotEmpty && searchProducts.isEmpty
-                        ? const Center(
-                            child: Text("Result not found"),
-                          )
-                        : Container(
-                            padding: const EdgeInsets.all(10),
-                            child: GridView.builder(
-                                itemCount: searchProducts.length,
-                                gridDelegate:
-                                    const SliverGridDelegateWithFixedCrossAxisCount(
-                                        crossAxisCount: 2,
-                                        childAspectRatio: 1,
-                                        crossAxisSpacing: 20,
-                                        mainAxisSpacing: 20),
-                                itemBuilder: (context, index) {
-                                  final product = searchProducts?[index];
-                                  if (product != null) {
-                                    return ProductCard(product: product);
-                                  } else {
-                                    return Container();
-                                  }
-                                }),
-                          ))
-              ]),
-            ),
+              ),
+              Expanded(
+                  child: search.isNotEmpty && searchProducts.isEmpty
+                      ? const Center(
+                          child: Text("Result not found"),
+                        )
+                      : Container(
+                          padding: const EdgeInsets.all(10),
+                          child: GridView.builder(
+                              itemCount: searchProducts.length,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      childAspectRatio: 1,
+                                      crossAxisSpacing: 20,
+                                      mainAxisSpacing: 20),
+                              itemBuilder: (context, index) {
+                                final product = searchProducts?[index];
+                                if (product != null) {
+                                  return ProductCard(product: product);
+                                } else {
+                                  return Container();
+                                }
+                              }),
+                        ))
+            ]),
     ));
   }
 }

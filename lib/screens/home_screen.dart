@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:ecommerce_app/constant/style.dart';
 import 'package:ecommerce_app/models/product_%20model.dart';
 import 'package:ecommerce_app/screens/search_screen.dart';
 import 'package:ecommerce_app/widgets/product_card.dart';
@@ -45,7 +46,6 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         Container(
           padding: const EdgeInsets.only(left: 10, right: 10),
-          decoration: const BoxDecoration(color: Colors.white),
           child: Column(
             children: [
               TextField(
@@ -222,6 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fontSize: 18),
                                 ),
                                 IconButton(
+                                  splashRadius: ICON_SPLASH_RADIUS,
                                     onPressed: () {},
                                     icon: const Icon(Icons.arrow_right))
                               ],
