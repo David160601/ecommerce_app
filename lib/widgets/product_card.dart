@@ -26,62 +26,68 @@ class _ProductCardState extends ConsumerState<ProductCard> {
     double height = MediaQuery.of(context).size.height;
     return Card(
       elevation: 2,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Flexible(
-            flex: 1,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      "\$ ${widget.product.price ?? ""}",
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
+      child: InkWell(
+        onTap: () {},
+        child: Ink(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Flexible(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          "\$ ${widget.product.price ?? ""}",
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ),
+                      IconButton(
+                          splashRadius: ICON_SPLASH_RADIUS,
+                          onPressed: () {
+                            bool added = ref
+                                .read(cartProvider.notifier)
+                                .addProductToCart(widget.product);
+                            _showSnackBar(
+                                context,
+                                SnackBar(
+                                  content: Text(added
+                                      ? 'Product added to cart'
+                                      : "Product already added"),
+                                ));
+                          },
+                          icon: const Icon(Icons.add))
+                    ],
                   ),
-                  IconButton(
-                      splashRadius: ICON_SPLASH_RADIUS,
-                      onPressed: () {
-                        bool added = ref
-                            .read(cartProvider.notifier)
-                            .addProductToCart(widget.product);
-                        _showSnackBar(
-                            context,
-                            SnackBar(
-                              content: Text(added
-                                  ? 'Product added to cart'
-                                  : "Product already added"),
-                            ));
-                      },
-                      icon: const Icon(Icons.add))
-                ],
+                ),
               ),
-            ),
+              Flexible(
+                flex: 3,
+                child: SizedBox(
+                  width: double.maxFinite,
+                  child: FadeInImage(
+                      fit: BoxFit.cover,
+                      height: height * 0.5,
+                      placeholder: MemoryImage(kTransparentImage),
+                      image: NetworkImage(
+                          widget.product.images?.isNotEmpty == true
+                              ? widget.product.images![0]
+                              : '')),
+                ),
+              ),
+              Flexible(
+                  child: Text(
+                widget.product.title ?? '',
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context).textTheme.bodySmall,
+              )),
+              const SizedBox(height: 3)
+            ],
           ),
-          Flexible(
-            flex: 3,
-            child: SizedBox(
-              width: double.maxFinite,
-              child: FadeInImage(
-                  fit: BoxFit.cover,
-                  height: height * 0.5,
-                  placeholder: MemoryImage(kTransparentImage),
-                  image: NetworkImage(widget.product.images?.isNotEmpty == true
-                      ? widget.product.images![0]
-                      : '')),
-            ),
-          ),
-          Flexible(
-              child: Text(
-            widget.product.title ?? '',
-            overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodySmall,
-          )),
-          const SizedBox(height: 3)
-        ],
+        ),
       ),
     );
   }
