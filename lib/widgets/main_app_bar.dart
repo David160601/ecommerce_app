@@ -19,23 +19,14 @@ class _MainAppBarState extends ConsumerState<MainAppBar> {
       title: Text(widget.title),
       surfaceTintColor: Colors.transparent,
       actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 20),
-          child: badges.Badge(
-            badgeContent: Text(
-              productSize.toString(),
-              style: const TextStyle(color: Colors.white),
-            ),
-            child: IconButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const CartScreen()),
-                  );
-                },
-                icon: const Icon(Icons.shopping_cart)),
-          ),
-        )
+        IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const CartScreen()),
+              );
+            },
+            icon: const Icon(Icons.shopping_cart))
       ],
     );
   }

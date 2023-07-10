@@ -88,7 +88,6 @@ class _ProductsScreenState extends State<CategoryScreen> {
           child: Column(children: [
             const Text("Price range 0 - 2000 \$"),
             RangeSlider(
-              activeColor: Colors.pink,
               values: currentRangeValues,
               max: 2000,
               divisions: 5,
@@ -111,9 +110,8 @@ class _ProductsScreenState extends State<CategoryScreen> {
                 });
               },
             ),
-            Divider(
+        const Divider(
               height: 30,
-              color: Colors.pink.shade200,
             )
           ]),
         ),

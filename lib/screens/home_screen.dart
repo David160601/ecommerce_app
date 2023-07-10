@@ -78,9 +78,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              Divider(
+             const Divider(
                 height: 30,
-                color: Colors.pink.shade200,
               )
             ],
           ),

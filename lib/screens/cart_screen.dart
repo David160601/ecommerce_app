@@ -52,7 +52,6 @@ class _CartScreenState extends ConsumerState<CartScreen> {
         padding: const EdgeInsets.all(20),
         child: ElevatedButton(
           onPressed: () {},
-          style: ElevatedButton.styleFrom(foregroundColor: Colors.pink),
           child: const Text("Check out"),
         ),
       ),

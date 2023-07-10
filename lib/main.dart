@@ -5,10 +5,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   const storage = FlutterSecureStorage();
   String? accessToken = await storage.read(key: "access_token");
-
   runApp(
     ProviderScope(
       child: MyApp(
@@ -21,17 +19,26 @@ void main() async {
 class MyApp extends StatelessWidget {
   final String? accessToken;
   const MyApp({super.key, required this.accessToken});
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-          useMaterial3: true,
+          primarySwatch: Colors.pink,
+          brightness: Brightness.light,
           iconTheme: const IconThemeData(color: Colors.pink),
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ButtonStyle(
+              padding: MaterialStateProperty.all<EdgeInsets>(
+                const EdgeInsets.symmetric(
+                    vertical: 15), // Adjust the padding as needed
+              ),
+            ),
+          ),
+          dividerColor: Colors.pink,
           appBarTheme: const AppBarTheme(
+              elevation: 0,
               actionsIconTheme: IconThemeData(color: Colors.pink),
               backgroundColor: Colors.white,
               centerTitle: true,

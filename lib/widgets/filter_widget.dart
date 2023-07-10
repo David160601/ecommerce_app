@@ -37,7 +37,6 @@ class _SearchFilterBodyState extends State<SearchFilterBody> {
           child: Text(textAlign: TextAlign.start, "Price range 0 - 2000 \$"),
         ),
         RangeSlider(
-          activeColor: Colors.pink,
           values: widget.currentRangeValues,
           max: 2000,
           divisions: 5,
@@ -59,10 +58,7 @@ class _SearchFilterBodyState extends State<SearchFilterBody> {
               Navigator.pop(context);
               widget.filterSubmit(widget.currentRangeValues);
             },
-            style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.pink,
-              // Background color
-            ),
+           
             child: const Text(
               "Submit",
             ),

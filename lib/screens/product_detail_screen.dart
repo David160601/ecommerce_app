@@ -51,7 +51,7 @@ class _ProductDetailState extends State<ProductDetail> {
         child: ElevatedButton(
           onPressed: () {},
           style: ElevatedButton.styleFrom(foregroundColor: Colors.pink),
-          child: const Text("Add to cart"),
+          child: const Text("Add to cart",style: TextStyle(color: Colors.white),),
         ),
       ),
     );

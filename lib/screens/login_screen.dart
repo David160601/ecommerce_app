@@ -149,10 +149,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                 // you'd often call a server or save the information in a database.
                               }
                             },
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.pink,
-                        // Background color
-                      ),
                       icon: loading
                           ? Container(
                               width: 24,

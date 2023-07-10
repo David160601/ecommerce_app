@@ -72,11 +72,13 @@ class _SearchScreenState extends State<SearchScreen> {
     super.initState();
     getCategories();
   }
+
   @override
   void dispose() {
     super.dispose();
     searchController.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -124,15 +126,13 @@ class _SearchScreenState extends State<SearchScreen> {
       ),
       body: loading
           ? const Center(
-              child: CircularProgressIndicator(
-                color: Colors.pink,
-              ),
+              child: CircularProgressIndicator(),
             )
-          : Column(children: [
-              Container(
-                color: Colors.white,
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                child: Row(
+          : Container(
+              color: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Column(children: [
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     search.isNotEmpty
@@ -155,32 +155,32 @@ class _SearchScreenState extends State<SearchScreen> {
                         icon: const Icon(Icons.settings_input_component))
                   ],
                 ),
-              ),
-              Expanded(
-                  child: search.isNotEmpty && searchProducts.isEmpty
-                      ? const Center(
-                          child: Text("Result not found"),
-                        )
-                      : Container(
-                          padding: const EdgeInsets.all(10),
-                          child: GridView.builder(
-                              itemCount: searchProducts.length,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      childAspectRatio: 1,
-                                      crossAxisSpacing: 20,
-                                      mainAxisSpacing: 20),
-                              itemBuilder: (context, index) {
-                                final product = searchProducts?[index];
-                                if (product != null) {
-                                  return ProductCard(product: product);
-                                } else {
-                                  return Container();
-                                }
-                              }),
-                        ))
-            ]),
+                Expanded(
+                    child: search.isNotEmpty && searchProducts.isEmpty
+                        ? const Center(
+                            child: Text("Result not found"),
+                          )
+                        : Container(
+                            padding: const EdgeInsets.all(10),
+                            child: GridView.builder(
+                                itemCount: searchProducts.length,
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        childAspectRatio: 1,
+                                        crossAxisSpacing: 20,
+                                        mainAxisSpacing: 20),
+                                itemBuilder: (context, index) {
+                                  final product = searchProducts?[index];
+                                  if (product != null) {
+                                    return ProductCard(product: product);
+                                  } else {
+                                    return Container();
+                                  }
+                                }),
+                          ))
+              ]),
+            ),
     ));
   }
 }
