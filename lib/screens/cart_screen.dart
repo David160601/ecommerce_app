@@ -20,31 +20,35 @@ class _CartScreenState extends ConsumerState<CartScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: ref.watch(cartProvider).length,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      ProductListCartCard(
-                          product: ref.watch(cartProvider)[index]),
-                      const SizedBox(
-                        height: 10,
-                      )
-                    ],
-                  );
-                },
+        child: ref.watch(cartProvider).isEmpty
+            ? const Center(
+                child: Text("No item"),
+              )
+            : SingleChildScrollView(
+                child: Column(
+                  children: [
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: ref.watch(cartProvider).length,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            ProductListCartCard(
+                                product: ref.watch(cartProvider)[index]),
+                            const SizedBox(
+                              height: 10,
+                            )
+                          ],
+                        );
+                      },
+                    ),
+                    const SizedBox(
+                        height:
+                            80), // Adjust the height to accommodate the bottom sheet
+                  ],
+                ),
               ),
-              const SizedBox(
-                  height:
-                      80), // Adjust the height to accommodate the bottom sheet
-            ],
-          ),
-        ),
       ),
       bottomSheet: Container(
         width: double.infinity,

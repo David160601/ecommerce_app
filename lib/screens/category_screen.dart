@@ -83,7 +83,9 @@ class _ProductsScreenState extends State<CategoryScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-      appBar: MainAppBar(title: widget.category.name ?? ""),
+      appBar: AppBar(
+        title: Text(widget.category.name ?? ""),
+      ),
       body: Column(children: [
         Container(
           padding: const EdgeInsets.all(CONTAINER_PADDING),

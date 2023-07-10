@@ -1,16 +1,18 @@
 import 'package:ecommerce_app/models/product_%20model.dart';
+import 'package:ecommerce_app/providers/cart_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class ProductDetail extends StatefulWidget {
+class ProductDetail extends ConsumerStatefulWidget {
   final Product product;
   const ProductDetail({super.key, required this.product});
 
   @override
-  State<ProductDetail> createState() => _ProductDetailState();
+  ConsumerState<ProductDetail> createState() => _ProductDetailState();
 }
 
-class _ProductDetailState extends State<ProductDetail> {
+class _ProductDetailState extends ConsumerState<ProductDetail> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -51,7 +53,11 @@ class _ProductDetailState extends State<ProductDetail> {
         color: Colors.white,
         padding: const EdgeInsets.all(20),
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            bool added = ref
+                .read(cartProvider.notifier)
+                .addProductToCart(widget.product);
+          },
           style: ElevatedButton.styleFrom(foregroundColor: Colors.pink),
           child: const Text(
             "Add to cart",

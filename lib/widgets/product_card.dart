@@ -27,7 +27,13 @@ class _ProductCardState extends ConsumerState<ProductCard> {
     return Card(
       elevation: 2,
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ProductDetail(product: widget.product)),
+          );
+        },
         child: Ink(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

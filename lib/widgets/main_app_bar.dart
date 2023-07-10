@@ -19,6 +19,11 @@ class _MainAppBarState extends ConsumerState<MainAppBar> {
     int productSize = ref.watch(cartProvider).length;
     return AppBar(
       title: Text(widget.title),
+      leading: IconButton(
+        splashRadius: 20,
+        icon: const Icon(Icons.menu),
+        onPressed: () => Scaffold.of(context).openDrawer(),
+      ),
       surfaceTintColor: Colors.transparent,
       actions: [
         Padding(
