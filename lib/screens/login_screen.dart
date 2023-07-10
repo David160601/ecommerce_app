@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:ecommerce_app/constant/style.dart';
 import 'package:ecommerce_app/providers/auth_provider.dart';
 import 'package:ecommerce_app/screens/sign_up_screen.dart';
 import 'package:ecommerce_app/screens/tab_screen.dart';
@@ -77,15 +78,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return SafeArea(
       child: Scaffold(
         body: Container(
-          padding: const EdgeInsets.all(30),
+          padding: const EdgeInsets.all(CONTAINER_PADDING),
           child: Form(
             key: formKey,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const SizedBox(
-                  height: 80,
-                ),
                 const Align(
                   child: Text(
                     "CSX",
@@ -137,7 +134,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   obscureText: hidePassword,
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 10,
                 ),
                 SizedBox(
                     width: double.infinity,
@@ -166,7 +163,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       label: const Text('Login'),
                     )),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 SizedBox(
                     width: double.infinity,
