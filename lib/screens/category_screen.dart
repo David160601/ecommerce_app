@@ -71,7 +71,11 @@ class _ProductsScreenState extends State<CategoryScreen> {
       }
     });
   }
-
+@override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(

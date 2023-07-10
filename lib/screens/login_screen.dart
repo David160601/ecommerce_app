@@ -63,7 +63,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       // Handle exception
     }
   }
-
+@override
+  void dispose() {
+      super.dispose();
+    password.dispose();
+    email.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(
