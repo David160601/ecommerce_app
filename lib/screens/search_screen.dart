@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:ecommerce_app/constant/style.dart';
 import 'package:ecommerce_app/models/category_model.dart';
 import 'package:ecommerce_app/models/product_%20model.dart';
+import 'package:ecommerce_app/services/product_service.dart';
 import 'package:ecommerce_app/widgets/filter_widget.dart';
 import 'package:ecommerce_app/widgets/product_card.dart';
 import 'package:flutter/material.dart';
@@ -25,19 +26,16 @@ class _SearchScreenState extends State<SearchScreen> {
     setState(() {
       loading = true;
     });
-    var response = await Dio().get(
-        "https://api.escuelajs.co/api/v1/products?title=${searchController.text}&limit=100&price_min=${currentRangeValues.start.toInt().toString()}&price_max=${currentRangeValues.end.toInt().toString()}");
-    List<Product> responseProducts = [];
-    if (response.statusCode == 200) {
-      for (var item in response.data) {
-        responseProducts.add(Product.fromJson(item));
-      }
-      setState(() {
-        searchProducts = responseProducts;
-      });
-    } else {
-      throw Exception("Error");
-    }
+    List<Product> responseProducts =
+        await ProductService.getProducts(queryParams: {
+      "title": searchController.text,
+      "limit": "100",
+      "price_min": currentRangeValues.start.toString(),
+      "price_max": currentRangeValues.end.toString()
+    });
+    setState(() {
+      searchProducts = responseProducts;
+    });
     setState(() {
       loading = false;
     });
@@ -50,28 +48,9 @@ class _SearchScreenState extends State<SearchScreen> {
     }
   }
 
-  Future getCategories() async {
-    setState(() {
-      categoriesLoading = true;
-    });
-    var response =
-        await Dio().get("https://api.escuelajs.co/api/v1/categories/");
-    List<Category> responseCategories = [];
-    if (response.statusCode == 200) {
-      for (var item in response.data) {
-        responseCategories.add(Category.fromJson(item));
-      }
-    }
-    categories = responseCategories;
-    setState(() {
-      categoriesLoading = false;
-    });
-  }
-
   @override
   void initState() {
     super.initState();
-    getCategories();
   }
 
   @override
@@ -133,8 +112,9 @@ class _SearchScreenState extends State<SearchScreen> {
               Material(
                 color: Colors.white,
                 child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: CONTAINER_PADDING, horizontal: CONTAINER_PADDING),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: CONTAINER_PADDING,
+                      horizontal: CONTAINER_PADDING),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -146,7 +126,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             )
                           : Container(),
                       IconButton(
-                        splashRadius: ICON_SPLASH_RADIUS,
+                          splashRadius: ICON_SPLASH_RADIUS,
                           onPressed: () {
                             showModalBottomSheet(
                               context: context,

@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:ecommerce_app/constant/style.dart';
 import 'package:ecommerce_app/models/category_model.dart';
 import 'package:ecommerce_app/models/product_%20model.dart';
+import 'package:ecommerce_app/services/product_service.dart';
 import 'package:ecommerce_app/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletons/skeletons.dart';
@@ -23,24 +24,22 @@ class _ProductsScreenState extends State<CategoryScreen> {
   var scrollLoading = false;
   var end = false;
   Future fetch() async {
-    var response = await Dio().get(
-        "https://api.escuelajs.co/api/v1/products?price_min=${currentRangeValues.start.toInt().toString()}&price_max=${currentRangeValues.end.toInt().toString()}&categoryId=${widget.category.id ?? 1}&limit=10&offset=${offset}");
-    List<Product> responseProducts = [];
-    if (response.statusCode == 200) {
-      for (var item in response.data) {
-        responseProducts.add(Product.fromJson(item));
+    List<Product> responseProducts =
+        await ProductService.getProducts(queryParams: {
+      "price_min": currentRangeValues.start.toString(),
+      "price_max": currentRangeValues.end.toString(),
+      "categoryId": widget.category.id.toString(),
+      "limit": "10",
+      "offset": offset.toString()
+    });
+    setState(() {
+      if (responseProducts.isEmpty) {
+        end = true;
+      } else {
+        offset += responseProducts.length;
+        products.addAll(responseProducts);
       }
-      setState(() {
-        if (responseProducts.isEmpty) {
-          end = true;
-        } else {
-          offset += responseProducts.length;
-          products.addAll(responseProducts);
-        }
-      });
-    } else {
-      throw Exception("Error");
-    }
+    });
   }
 
   Future firstFetch() async {

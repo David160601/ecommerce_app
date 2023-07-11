@@ -1,7 +1,7 @@
-import 'package:dio/dio.dart';
 import 'package:ecommerce_app/constant/style.dart';
 import 'package:ecommerce_app/models/product_%20model.dart';
 import 'package:ecommerce_app/screens/search_screen.dart';
+import 'package:ecommerce_app/services/product_service.dart';
 import 'package:ecommerce_app/widgets/product_card.dart';
 import 'package:ecommerce_app/widgets/slide_item.dart';
 import 'package:flutter/material.dart';
@@ -16,29 +16,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   Future<List<Product>> getSliderProducts() async {
-    var response = await Dio()
-        .get('https://api.escuelajs.co/api/v1/products/?offset=0&limit=6');
-    List<Product> products = [];
-    if (response.statusCode == 200) {
-      for (var item in response.data) {
-        products.add(Product.fromJson(item));
-      }
-    }
-    return products;
+    return await ProductService.getProducts(
+        queryParams: {"offset": "0", "limit": "6"});
   }
 
   Future<List<Product>> getPopularProducts() async {
-    var response = await Dio()
-        .get('https://api.escuelajs.co/api/v1/products/?offset=10&limit=6');
-    List<Product> products = [];
-    if (response.statusCode == 200) {
-      for (var item in response.data) {
-        products.add(Product.fromJson(item));
-      }
-    }
-    return products;
+    return await ProductService.getProducts(
+        queryParams: {"offset": "10", "limit": "6"});
   }
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -59,7 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 },
                 decoration: InputDecoration(
-                  
                   suffixIcon: const Icon(
                     Icons.search,
                     color: Colors.pink,
@@ -88,7 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
         Expanded(
           child: SingleChildScrollView(
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: CONTAINER_PADDING),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: CONTAINER_PADDING),
               child: Column(children: [
                 FutureBuilder<List<Product>>(
                   future: getSliderProducts(),
@@ -216,9 +201,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                 Text(
+                                Text(
                                   "Popular product",
-                                  style: Theme.of(context).textTheme.titleMedium,
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
                                 ),
                                 IconButton(
                                     splashRadius: ICON_SPLASH_RADIUS,
