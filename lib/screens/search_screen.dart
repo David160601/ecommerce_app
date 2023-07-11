@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:ecommerce_app/constant/style.dart';
 import 'package:ecommerce_app/models/category_model.dart';
 import 'package:ecommerce_app/models/product_%20model.dart';
+import 'package:ecommerce_app/services/category_service.dart';
 import 'package:ecommerce_app/services/product_service.dart';
 import 'package:ecommerce_app/widgets/filter_widget.dart';
 import 'package:ecommerce_app/widgets/product_card.dart';
@@ -20,9 +21,11 @@ class _SearchScreenState extends State<SearchScreen> {
   var search = "";
   var loading = false;
   var categoriesLoading = false;
+  Category? selectedCategory;
   List<Product> searchProducts = [];
   List<Category> categories = [];
   Future fetch() async {
+    String? categoryId = selectedCategory?.id?.toString();
     setState(() {
       loading = true;
     });
@@ -31,7 +34,8 @@ class _SearchScreenState extends State<SearchScreen> {
       "title": searchController.text,
       "limit": "100",
       "price_min": currentRangeValues.start.toString(),
-      "price_max": currentRangeValues.end.toString()
+      "price_max": currentRangeValues.end.toString(),
+      "categoryId": categoryId ?? ""
     });
     setState(() {
       searchProducts = responseProducts;
@@ -41,8 +45,22 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 
-  void filterSubmit(RangeValues values) async {
+  Future fetchCategories() async {
+    setState(() {
+      categoriesLoading = true;
+    });
+    List<Category> responseCategories = await CategoryService.getCategoryies();
+    setState(() {
+      categories = responseCategories;
+    });
+    setState(() {
+      categoriesLoading = false;
+    });
+  }
+
+  void filterSubmit(RangeValues values, Category? category) async {
     currentRangeValues = values;
+    selectedCategory = category;
     if (search.isNotEmpty) {
       fetch();
     }
@@ -51,6 +69,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
+    fetchCategories();
   }
 
   @override
@@ -124,20 +143,24 @@ class _SearchScreenState extends State<SearchScreen> {
                                   const TextStyle(fontWeight: FontWeight.bold),
                             )
                           : Container(),
-                      IconButton(
-                          splashRadius: ICON_SPLASH_RADIUS,
-                          onPressed: () {
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (context) {
-                                return SearchFilterBody(
-                                  currentRangeValues: currentRangeValues,
-                                  filterSubmit: filterSubmit,
+                      categoriesLoading
+                          ? const CircularProgressIndicator()
+                          : IconButton(
+                              splashRadius: ICON_SPLASH_RADIUS,
+                              onPressed: () {
+                                showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) {
+                                    return SearchFilterBody(
+                                      currentRangeValues: currentRangeValues,
+                                      categories: categories,
+                                      filterSubmit: filterSubmit,
+                                      selectedCategory: selectedCategory,
+                                    );
+                                  },
                                 );
                               },
-                            );
-                          },
-                          icon: const Icon(Icons.settings_input_component))
+                              icon: const Icon(Icons.settings_input_component))
                     ],
                   ),
                 ),

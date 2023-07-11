@@ -22,7 +22,7 @@ class PopularProductScreen extends StatelessWidget {
         title: const Text("Popular Product"),
         actions: const [
           Padding(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.only(right: 20, top: 10),
             child: CardIcon(),
           )
         ],
