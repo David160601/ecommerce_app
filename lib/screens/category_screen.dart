@@ -3,6 +3,7 @@ import 'package:ecommerce_app/constant/style.dart';
 import 'package:ecommerce_app/models/category_model.dart';
 import 'package:ecommerce_app/models/product_%20model.dart';
 import 'package:ecommerce_app/services/product_service.dart';
+import 'package:ecommerce_app/widgets/cart_icon.dart';
 import 'package:ecommerce_app/widgets/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletons/skeletons.dart';
@@ -81,73 +82,57 @@ class _ProductsScreenState extends State<CategoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-    title: Text(widget.category.name ?? ""),
+        title: Text(widget.category.name ?? ""),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 20, top: 10),
+            child: CardIcon(),
+          )
+        ],
       ),
       body: Column(children: [
-    Container(
-      padding: const EdgeInsets.all(CONTAINER_PADDING),
-      decoration: const BoxDecoration(color: Colors.white),
-      child: Column(children: [
-        Text(
-          "Price range 0 - 2000 \$",
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
-        RangeSlider(
-          values: currentRangeValues,
-          max: 2000,
-          divisions: 5,
-          labels: RangeLabels(
-            currentRangeValues.start.round().toString(),
-            currentRangeValues.end.round().toString(),
-          ),
-          onChanged: (RangeValues values) {
-            setState(() {
-              currentRangeValues = values;
-            });
-          },
-          onChangeEnd: (RangeValues values) {
-            setState(() {
-              end = false;
-              offset = 0;
-              products = [];
+        Container(
+          padding: const EdgeInsets.all(CONTAINER_PADDING),
+          decoration: const BoxDecoration(color: Colors.white),
+          child: Column(children: [
+            Text(
+              "Price range 0 - 2000 \$",
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            RangeSlider(
+              values: currentRangeValues,
+              max: 2000,
+              divisions: 5,
+              labels: RangeLabels(
+                currentRangeValues.start.round().toString(),
+                currentRangeValues.end.round().toString(),
+              ),
+              onChanged: (RangeValues values) {
+                setState(() {
+                  currentRangeValues = values;
+                });
+              },
+              onChangeEnd: (RangeValues values) {
+                setState(() {
+                  end = false;
+                  offset = 0;
+                  products = [];
 
-              firstFetch();
-            });
-          },
+                  firstFetch();
+                });
+              },
+            ),
+            const Divider(
+              height: 30,
+            )
+          ]),
         ),
-        const Divider(
-          height: 30,
-        )
-      ]),
-    ),
-    Expanded(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: CONTAINER_PADDING),
-        child: loading
-            ? GridView.builder(
-                itemCount: 6,
-                gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 1,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20),
-                itemBuilder: (context, index) {
-                  return SkeletonLine(
-                    style: SkeletonLineStyle(
-                        height: double.maxFinite,
-                        borderRadius: BorderRadius.circular(20)),
-                  );
-                })
-            : products.isEmpty
-                ? const Center(
-                    child: Text("No data available"),
-                  )
-                : GridView.builder(
-                    controller: controller,
-                    itemCount: scrollLoading
-                        ? products.length + 2
-                        : products.length,
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: CONTAINER_PADDING),
+            child: loading
+                ? GridView.builder(
+                    itemCount: 6,
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
@@ -155,21 +140,43 @@ class _ProductsScreenState extends State<CategoryScreen> {
                             crossAxisSpacing: 20,
                             mainAxisSpacing: 20),
                     itemBuilder: (context, index) {
-                      if (index < products.length) {
-                        final product = products?[index];
-                        if (product != null) {
-                          return ProductCard(product: product);
-                        } else {
-                          return Container();
-                        }
-                      } else {
-                        return const SkeletonLine(
-                          style: SkeletonLineStyle(height: double.infinity),
-                        );
-                      }
-                    }),
-      ),
-    )
+                      return SkeletonLine(
+                        style: SkeletonLineStyle(
+                            height: double.maxFinite,
+                            borderRadius: BorderRadius.circular(20)),
+                      );
+                    })
+                : products.isEmpty
+                    ? const Center(
+                        child: Text("No data available"),
+                      )
+                    : GridView.builder(
+                        controller: controller,
+                        itemCount: scrollLoading
+                            ? products.length + 2
+                            : products.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 1,
+                                crossAxisSpacing: 20,
+                                mainAxisSpacing: 20),
+                        itemBuilder: (context, index) {
+                          if (index < products.length) {
+                            final product = products?[index];
+                            if (product != null) {
+                              return ProductCard(product: product);
+                            } else {
+                              return Container();
+                            }
+                          } else {
+                            return const SkeletonLine(
+                              style: SkeletonLineStyle(height: double.infinity),
+                            );
+                          }
+                        }),
+          ),
+        )
       ]),
     );
   }

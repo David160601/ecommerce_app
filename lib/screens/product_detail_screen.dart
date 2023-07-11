@@ -1,24 +1,26 @@
 import 'package:ecommerce_app/models/product_%20model.dart';
 import 'package:ecommerce_app/providers/cart_provider.dart';
+import 'package:ecommerce_app/widgets/cart_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-class ProductDetail extends ConsumerStatefulWidget {
+class ProductDetail extends ConsumerWidget {
   final Product product;
   const ProductDetail({super.key, required this.product});
 
   @override
-  ConsumerState<ProductDetail> createState() => _ProductDetailState();
-}
-
-class _ProductDetailState extends ConsumerState<ProductDetail> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.product.title ?? ""),
+        title: Text(product.title ?? ""),
+        actions: const [
+          Padding(
+            padding: EdgeInsets.only(right: 20, top: 10),
+            child: CardIcon(),
+          )
+        ],
       ),
       body: Column(children: [
         FadeInImage(
@@ -26,23 +28,22 @@ class _ProductDetailState extends ConsumerState<ProductDetail> {
             width: double.infinity,
             fit: BoxFit.cover,
             placeholder: MemoryImage(kTransparentImage),
-            image: NetworkImage(widget.product.images?.isNotEmpty == true
-                ? widget.product.images![0]
-                : '')),
+            image: NetworkImage(
+                product.images?.isNotEmpty == true ? product.images![0] : '')),
         Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "\$ ${widget.product.price.toString()}" ?? '',
+                  "\$ ${product.price.toString()}" ?? '',
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 Text(
-                  widget.product.description ?? '',
+                  product.description ?? '',
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
               ],
@@ -54,9 +55,8 @@ class _ProductDetailState extends ConsumerState<ProductDetail> {
         padding: const EdgeInsets.all(20),
         child: ElevatedButton(
           onPressed: () {
-            bool added = ref
-                .read(cartProvider.notifier)
-                .addProductToCart(widget.product);
+            bool added =
+                ref.read(cartProvider.notifier).addProductToCart(product);
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(
