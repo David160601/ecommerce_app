@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/constant/style.dart';
 import 'package:ecommerce_app/models/product_%20model.dart';
+import 'package:ecommerce_app/screens/popular_product_screen.dart';
 import 'package:ecommerce_app/screens/search_screen.dart';
 import 'package:ecommerce_app/services/product_service.dart';
 import 'package:ecommerce_app/widgets/product_card.dart';
@@ -24,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return await ProductService.getProducts(
         queryParams: {"offset": "10", "limit": "6"});
   }
+
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -208,7 +210,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                                 IconButton(
                                     splashRadius: ICON_SPLASH_RADIUS,
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const PopularProductScreen()));
+                                    },
                                     icon: const Icon(Icons.arrow_right))
                               ],
                             ),

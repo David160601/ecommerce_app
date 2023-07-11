@@ -61,8 +61,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       appBar: AppBar(
         surfaceTintColor: Colors.transparent,
         title: TextField(
@@ -168,6 +167,6 @@ class _SearchScreenState extends State<SearchScreen> {
                               }),
                         ))
             ]),
-    ));
+    );
   }
 }

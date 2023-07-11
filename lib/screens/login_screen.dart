@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:ecommerce_app/constant/style.dart';
-import 'package:ecommerce_app/providers/auth_provider.dart';
 import 'package:ecommerce_app/screens/sign_up_screen.dart';
-import 'package:ecommerce_app/screens/tab_screen.dart';
 import 'package:ecommerce_app/services/authService.dart';
 import 'package:ecommerce_app/widgets/password_wiget.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +8,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
-  final storage = new FlutterSecureStorage();
-  LoginScreen({Key? key}) : super(key: key);
+  final storage = const FlutterSecureStorage();
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   ConsumerState<LoginScreen> createState() => _LoginScreenState();
