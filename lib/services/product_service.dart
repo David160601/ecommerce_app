@@ -16,6 +16,7 @@ class ProductService {
         for (var item in body) {
           products.add(Product.fromJson(item));
         }
+
         return products;
       } else {
         throw Exception("Faild to fetch products");
