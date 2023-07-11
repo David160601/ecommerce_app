@@ -1,4 +1,5 @@
 import 'package:ecommerce_app/models/product_%20model.dart';
+import 'package:ecommerce_app/screens/product_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletons/skeletons.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -9,46 +10,53 @@ class SlideItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 5.0),
-      width: double.infinity,
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-      decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 240, 163, 189),
-          borderRadius: BorderRadius.circular(5)),
-      child: Row(
-        children: [
-          Card(
-              child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                const Text(
-                  "Big discount",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+    return Card(
+      color: Colors.pinkAccent,
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ProductDetail(product: product)));
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: [
+              Card(
+                  child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    const Text(
+                      "Big discount",
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                    ),
+                    Text(
+                      "50 %",
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                  ],
                 ),
-                Text(
-                  "50 %",
-                  style: Theme.of(context).textTheme.headlineLarge,
-                ),
-              ],
-            ),
-          )),
-          const SizedBox(
-            width: 15,
+              )),
+              const SizedBox(
+                width: 15,
+              ),
+              Expanded(
+                child: FadeInImage(
+                    placeholder: MemoryImage(kTransparentImage),
+                    fit: BoxFit.cover,
+                    width: double.maxFinite,
+                    height: height * 0.75,
+                    image: NetworkImage(product.images?.isNotEmpty == true
+                        ? product.images![0]
+                        : '')),
+              ),
+            ],
           ),
-          Expanded(
-            child: FadeInImage(
-                placeholder: MemoryImage(kTransparentImage),
-                fit: BoxFit.cover,
-                width: double.maxFinite,
-                height: height * 0.75,
-                image: NetworkImage(product.images?.isNotEmpty == true
-                    ? product.images![0]
-                    : '')),
-          ),
-        ],
+        ),
       ),
     );
   }
