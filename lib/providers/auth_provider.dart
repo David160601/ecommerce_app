@@ -8,6 +8,7 @@ class AuthNotifier extends StateNotifier<String?> {
   final storage = new FlutterSecureStorage();
 
   void setToken(String? token) {
+    storage.write(key: 'access_token', value: token);
     state = token;
   }
 

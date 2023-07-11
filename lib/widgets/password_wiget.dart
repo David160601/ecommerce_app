@@ -17,7 +17,10 @@ class _PasswordWidgetState extends State<PasswordWidget> {
       controller: widget.password,
       validator: (value) {
         if (value == null || value.isEmpty) {
-          return 'Please input Password';
+          return 'Please input password';
+        }
+        if (value.length < 4) {
+          return 'Password must be atleast 4 characters';
         }
         return null;
       },

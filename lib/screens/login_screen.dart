@@ -3,6 +3,7 @@ import 'package:ecommerce_app/constant/style.dart';
 import 'package:ecommerce_app/providers/auth_provider.dart';
 import 'package:ecommerce_app/screens/sign_up_screen.dart';
 import 'package:ecommerce_app/screens/tab_screen.dart';
+import 'package:ecommerce_app/services/authService.dart';
 import 'package:ecommerce_app/widgets/password_wiget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -24,49 +25,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final dio = Dio();
   var loading = false;
   Future<void> handleLoginAndNavigate(BuildContext context) async {
-    setState(() {
-      loading = true;
-    });
     try {
-      var response = await dio.post(
-        'https://api.escuelajs.co/api/v1/auth/login',
-        data: {'email': email.text, "password": password.text},
-      );
       setState(() {
-        loading = false;
+        loading = true;
       });
-      if (response.statusCode == 201) {
-        await widget.storage
-            .write(key: "access_token", value: response.data["access_token"]);
-        if (!context.mounted) return;
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const TabsScreen()),
-        );
-        ref.read(authProvider.notifier).setToken(response.data["access_token"]);
-      } else {
-        if (!context.mounted) return;
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Incorrect password')),
-        );
-      }
+      await AuthService.login(widget.storage, context,
+          {"email": email.text, "password": password.text}, ref);
     } catch (e) {
-      if (e is DioException) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Incorrect password')),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('An error occurred')),
-        );
-      }
       setState(() {
         loading = false;
       });
-      // Handle exception
     }
   }
-
   @override
   void dispose() {
     super.dispose();

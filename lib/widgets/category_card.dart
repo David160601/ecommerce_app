@@ -20,7 +20,6 @@ class CategoryCard extends StatelessWidget {
       },
       child: Ink(
         decoration: BoxDecoration(
-            border: Border.all(width: 1),
             image: DecorationImage(
                 image: NetworkImage(category.image ?? ''),
                 fit: BoxFit.cover,

@@ -1,6 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:ecommerce_app/constant/style.dart';
 import 'package:ecommerce_app/models/category_model.dart';
+import 'package:ecommerce_app/services/category_service.dart';
 import 'package:ecommerce_app/widgets/category_card.dart';
 import 'package:flutter/material.dart';
 import 'package:skeletons/skeletons.dart';
@@ -15,17 +15,8 @@ class CategorieScreen extends StatefulWidget {
 class _CategorieScreenState extends State<CategorieScreen> {
   List<Category> categories = [];
   Future<List<Category>> getCategories() async {
-    var response =
-        await Dio().get("https://api.escuelajs.co/api/v1/categories/");
-    List<Category> categories = [];
-    if (response.statusCode == 200) {
-      for (var item in response.data) {
-        categories.add(Category.fromJson(item));
-      }
-    }
-    return categories;
+    return await CategoryService.getCategoryies();
   }
-
   @override
   Widget build(BuildContext context) {
     return Container(

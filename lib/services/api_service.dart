@@ -14,4 +14,14 @@ class ApiService {
       rethrow;
     }
   }
+
+  static Future<http.Response> httpPost(String path, dynamic body) async {
+    Uri uri = Uri.parse(path);
+    try {
+      var response = await http.post(uri, body: body);
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

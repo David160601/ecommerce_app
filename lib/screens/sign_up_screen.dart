@@ -1,5 +1,6 @@
 import 'package:ecommerce_app/constant/style.dart';
 import 'package:ecommerce_app/screens/login_screen.dart';
+import 'package:ecommerce_app/services/authService.dart';
 import 'package:ecommerce_app/widgets/password_wiget.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +15,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController password = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController name = TextEditingController();
+  bool loading = false;
   final formKey = GlobalKey<FormState>();
   @override
   void dispose() {
@@ -21,6 +23,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
     password.dispose();
     email.dispose();
     name.dispose();
+  }
+
+  Future handleSignUp() async {
+    setState(() {
+      loading = true;
+    });
+
+    setState(() {
+      loading = false;
+    });
   }
 
   @override
