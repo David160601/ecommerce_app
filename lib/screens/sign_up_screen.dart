@@ -17,6 +17,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final formKey = GlobalKey<FormState>();
   @override
   void dispose() {
+    super.dispose();
     password.dispose();
     email.dispose();
     name.dispose();
