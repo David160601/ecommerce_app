@@ -103,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         children = CarouselSlider(
                           options: CarouselOptions(
                             autoPlay: true,
-                            aspectRatio: 1.0,
+                            enlargeStrategy: CenterPageEnlargeStrategy.height,
                             enlargeCenterPage: true,
                             height: height * 0.20,
                           ),
