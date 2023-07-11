@@ -3,6 +3,7 @@ import 'package:ecommerce_app/constant/style.dart';
 import 'package:ecommerce_app/providers/auth_provider.dart';
 import 'package:ecommerce_app/screens/sign_up_screen.dart';
 import 'package:ecommerce_app/screens/tab_screen.dart';
+import 'package:ecommerce_app/widgets/password_wiget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -110,28 +111,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                TextFormField(
-                  controller: password,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please input Password';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    hintText: "Password",
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          hidePassword = !hidePassword;
-                        });
-                      },
-                      icon: Icon(hidePassword
-                          ? Icons.remove_red_eye
-                          : Icons.visibility_off),
-                    ),
-                  ),
-                  obscureText: hidePassword,
+                PasswordWidget(
+                  password: password,
                 ),
                 const SizedBox(
                   height: 10,
@@ -170,7 +151,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(primary: Colors.blue),
                         onPressed: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => const SignUpScreen()));
