@@ -49,101 +49,99 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Form(
-          key: formKey,
-          child: Container(
-            padding: const EdgeInsets.all(CONTAINER_PADDING),
-            child: Column(
-              children: [
-                const Text(
-                  "CSX",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.pink,
-                    fontWeight: FontWeight.w400,
-                    fontSize: 60,
-                  ),
+    return Scaffold(
+      body: Form(
+        key: formKey,
+        child: Container(
+          padding: const EdgeInsets.all(CONTAINER_PADDING),
+          child: Column(
+            children: [
+              const Text(
+                "CSX",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.pink,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 60,
                 ),
-                const SizedBox(
-                  height: 30,
-                ),
-                TextFormField(
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please input name";
-                    } else {
-                      return null;
-                    }
-                  },
-                  controller: name,
-                  decoration: const InputDecoration(hintText: "Name"),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please input email";
-                    } else {
-                      return null;
-                    }
-                  },
-                  controller: email,
-                  decoration: const InputDecoration(hintText: "Email"),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                PasswordWidget(password: password),
-                const SizedBox(
-                  height: 10,
-                ),
-                SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
-                        icon: loading
-                            ? Container(
-                                width: 24,
-                                height: 24,
-                                padding: const EdgeInsets.all(2.0),
-                                child: const CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 3,
-                                ),
-                              )
-                            : Container(),
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue),
-                        onPressed: loading
-                            ? null
-                            : () {
-                                if (formKey.currentState!.validate()) {
-                                  handleSignUp(context);
-                                }
-                              },
-                        label: const Text('Sign Up'))),
-                const SizedBox(
-                  height: 10,
-                ),
-                SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.pink),
-                        onPressed: loading
-                            ? null
-                            : () {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => LoginScreen()));
-                              },
-                        child: const Text('Sign in instead'))),
-              ],
-            ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please input name";
+                  } else {
+                    return null;
+                  }
+                },
+                controller: name,
+                decoration: const InputDecoration(hintText: "Name"),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              TextFormField(
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please input email";
+                  } else {
+                    return null;
+                  }
+                },
+                controller: email,
+                decoration: const InputDecoration(hintText: "Email"),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              PasswordWidget(password: password),
+              const SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                      icon: loading
+                          ? Container(
+                              width: 24,
+                              height: 24,
+                              padding: const EdgeInsets.all(2.0),
+                              child: const CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 3,
+                              ),
+                            )
+                          : Container(),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.blue),
+                      onPressed: loading
+                          ? null
+                          : () {
+                              if (formKey.currentState!.validate()) {
+                                handleSignUp(context);
+                              }
+                            },
+                      label: const Text('Sign Up'))),
+              const SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.pink),
+                      onPressed: loading
+                          ? null
+                          : () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginScreen()));
+                            },
+                      child: const Text('Sign in instead'))),
+            ],
           ),
         ),
       ),

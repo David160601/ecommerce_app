@@ -47,92 +47,90 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Container(
-          padding: const EdgeInsets.all(CONTAINER_PADDING),
-          child: Form(
-            key: formKey,
-            child: Column(
-              children: [
-                const Align(
-                  child: Text(
-                    "CSX",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.pink,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 60,
-                    ),
+    return Scaffold(
+      body: Container(
+        padding: const EdgeInsets.all(CONTAINER_PADDING),
+        child: Form(
+          key: formKey,
+          child: Column(
+            children: [
+              const Align(
+                child: Text(
+                  "CSX",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.pink,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 60,
                   ),
                 ),
-                const SizedBox(
-                  height: 40,
-                ),
-                TextFormField(
-                  controller: email,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please input email';
-                    }
-                    return null;
-                  },
-                  decoration: const InputDecoration(hintText: "Email"),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                PasswordWidget(
-                  password: password,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton.icon(
+              ),
+              const SizedBox(
+                height: 40,
+              ),
+              TextFormField(
+                controller: email,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please input email';
+                  }
+                  return null;
+                },
+                decoration: const InputDecoration(hintText: "Email"),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              PasswordWidget(
+                password: password,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton.icon(
+                    onPressed: loading
+                        ? null
+                        : () {
+                            if (formKey.currentState!.validate()) {
+                              handleLoginAndNavigate(context);
+                            } else {
+                              // If the form is valid, display a snackbar. In the real world,
+                              // you'd often call a server or save the information in a database.
+                            }
+                          },
+                    icon: loading
+                        ? Container(
+                            width: 24,
+                            height: 24,
+                            padding: const EdgeInsets.all(2.0),
+                            child: const CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 3,
+                            ),
+                          )
+                        : Container(),
+                    label: const Text('Login'),
+                  )),
+              const SizedBox(
+                height: 10,
+              ),
+              SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(primary: Colors.blue),
                       onPressed: loading
                           ? null
                           : () {
-                              if (formKey.currentState!.validate()) {
-                                handleLoginAndNavigate(context);
-                              } else {
-                                // If the form is valid, display a snackbar. In the real world,
-                                // you'd often call a server or save the information in a database.
-                              }
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const SignUpScreen()));
                             },
-                      icon: loading
-                          ? Container(
-                              width: 24,
-                              height: 24,
-                              padding: const EdgeInsets.all(2.0),
-                              child: const CircularProgressIndicator(
-                                color: Colors.white,
-                                strokeWidth: 3,
-                              ),
-                            )
-                          : Container(),
-                      label: const Text('Login'),
-                    )),
-                const SizedBox(
-                  height: 10,
-                ),
-                SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(primary: Colors.blue),
-                        onPressed: loading
-                            ? null
-                            : () {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SignUpScreen()));
-                              },
-                        child: const Text("Sign Up")))
-              ],
-            ),
+                      child: const Text("Sign Up")))
+            ],
           ),
         ),
       ),

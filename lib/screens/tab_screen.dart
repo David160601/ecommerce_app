@@ -31,32 +31,31 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
+    return Scaffold(
       drawer: const MainDrawer(),
       body: screenBody,
       appBar: MainAppBar(
-        title: screenTitle,
+    title: screenTitle,
       ),
       bottomNavigationBar: SalomonBottomBar(
-          currentIndex: screenBodyIndex,
-          backgroundColor: Colors.white,
-          onTap: onChangeScreen,
-          items: [
-            /// Home
-            SalomonBottomBarItem(
-                icon: const Icon(Icons.home),
-                title: const Text("Home"),
-                selectedColor: Colors.pink,
-                unselectedColor: Colors.grey),
+      currentIndex: screenBodyIndex,
+      backgroundColor: Colors.white,
+      onTap: onChangeScreen,
+      items: [
+        /// Home
+        SalomonBottomBarItem(
+            icon: const Icon(Icons.home),
+            title: const Text("Home"),
+            selectedColor: Colors.pink,
+            unselectedColor: Colors.grey),
 
-            /// Likes
-            SalomonBottomBarItem(
-                icon: const Icon(Icons.category),
-                title: const Text("Categories"),
-                selectedColor: Colors.pink,
-                unselectedColor: Colors.grey),
-          ]),
-    ));
+        /// Likes
+        SalomonBottomBarItem(
+            icon: const Icon(Icons.category),
+            title: const Text("Categories"),
+            selectedColor: Colors.pink,
+            unselectedColor: Colors.grey),
+      ]),
+    );
   }
 }
