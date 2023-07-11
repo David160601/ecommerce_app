@@ -18,10 +18,10 @@ class CategoryService {
         }
         return categories;
       } else {
-        throw ("failed to fetch categories");
+        throw Exception("failed to fetch categories");
       }
     } catch (e) {
-      throw ('Error during fetch categories');
+      throw Exception('Error during fetch categories');
     }
   }
 }

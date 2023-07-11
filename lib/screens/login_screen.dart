@@ -29,14 +29,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       setState(() {
         loading = true;
       });
-      await AuthService.login(widget.storage, context,
-          {"email": email.text, "password": password.text}, ref);
+      await AuthService.login(
+          context, {"email": email.text, "password": password.text}, ref);
     } catch (e) {
       setState(() {
         loading = false;
       });
     }
   }
+
   @override
   void dispose() {
     super.dispose();
@@ -120,12 +121,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     width: double.infinity,
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(primary: Colors.blue),
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SignUpScreen()));
-                        },
+                        onPressed: loading
+                            ? null
+                            : () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const SignUpScreen()));
+                              },
                         child: const Text("Sign Up")))
               ],
             ),

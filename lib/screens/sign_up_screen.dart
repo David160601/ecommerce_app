@@ -3,15 +3,16 @@ import 'package:ecommerce_app/screens/login_screen.dart';
 import 'package:ecommerce_app/services/authService.dart';
 import 'package:ecommerce_app/widgets/password_wiget.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class SignUpScreen extends StatefulWidget {
+class SignUpScreen extends ConsumerStatefulWidget {
   const SignUpScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  ConsumerState<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends ConsumerState<SignUpScreen> {
   TextEditingController password = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController name = TextEditingController();
@@ -25,14 +26,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
     name.dispose();
   }
 
-  Future handleSignUp() async {
+  Future handleSignUp(BuildContext context) async {
     setState(() {
       loading = true;
     });
-
-    setState(() {
-      loading = false;
-    });
+    try {
+      await AuthService.signUp(
+          context,
+          {
+            "name": name.text,
+            "email": email.text,
+            "password": password.text,
+            "avatar": "https://api.lorem.space/image/face?w=640&h=480&r=867"
+          },
+          ref);
+    } catch (e) {
+      setState(() {
+        loading = false;
+      });
+    }
   }
 
   @override
@@ -60,7 +72,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 TextFormField(
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return "Please input email";
+                      return "Please input name";
                     } else {
                       return null;
                     }
@@ -91,13 +103,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 SizedBox(
                     width: double.infinity,
-                    child: ElevatedButton(
+                    child: ElevatedButton.icon(
+                        icon: loading
+                            ? Container(
+                                width: 24,
+                                height: 24,
+                                padding: const EdgeInsets.all(2.0),
+                                child: const CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 3,
+                                ),
+                              )
+                            : Container(),
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue),
-                        onPressed: () {
-                          if (formKey.currentState!.validate()) {}
-                        },
-                        child: const Text('Sign Up'))),
+                        onPressed: loading
+                            ? null
+                            : () {
+                                if (formKey.currentState!.validate()) {
+                                  handleSignUp(context);
+                                }
+                              },
+                        label: const Text('Sign Up'))),
                 const SizedBox(
                   height: 10,
                 ),
@@ -106,12 +133,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.pink),
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginScreen()));
-                        },
+                        onPressed: loading
+                            ? null
+                            : () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => LoginScreen()));
+                              },
                         child: const Text('Sign in instead'))),
               ],
             ),
